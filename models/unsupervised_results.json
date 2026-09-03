@@ -1,0 +1,49 @@
+{
+  "clustering": {
+    "method": "KMeans on the 339 actual failures' raw sensor readings only -- Type and the TWF/HDF/PWF/OSF/RNF flags were withheld from clustering entirely",
+    "chosen_k": 2,
+    "silhouette_score": 0.4924,
+    "silhouette_by_k_tried": {
+      "2": 0.4924,
+      "3": 0.39,
+      "4": 0.3437,
+      "5": 0.345,
+      "6": 0.3408
+    },
+    "validation_note": "the failure-mode flags were never used to fit the clusters -- they are used here only after the fact, to check whether the unsupervised structure recovered something mechanically real",
+    "adjusted_rand_index_vs_known_failure_modes": 0.0416,
+    "clusters": [
+      {
+        "cluster": 1,
+        "n_failures": 302,
+        "dominant_known_failure_mode": "HDF",
+        "purity": 0.38,
+        "mean_air_temp_k": 301.0,
+        "mean_process_temp_k": 310.3,
+        "mean_rotational_speed_rpm": 1369.2,
+        "mean_torque_nm": 54.8,
+        "mean_tool_wear_min": 147.2
+      },
+      {
+        "cluster": 0,
+        "n_failures": 37,
+        "dominant_known_failure_mode": "PWF",
+        "purity": 0.84,
+        "mean_air_temp_k": 300.1,
+        "mean_process_temp_k": 310.0,
+        "mean_rotational_speed_rpm": 2535.2,
+        "mean_torque_nm": 12.4,
+        "mean_tool_wear_min": 115.6
+      }
+    ],
+    "finding": "Clustering on raw sensor readings alone only weakly recovers this dataset's documented failure mechanisms (Adjusted Rand Index 0.04 vs the TWF/HDF/PWF/OSF/RNF labels, which the clustering never saw). The purest cluster is 84% 'PWF' failures, with mean torque 12.4Nm and tool wear 115.6min -- a distinct mechanical signature found with zero access to the failure-mode label."
+  },
+  "anomaly_detection": {
+    "method": "IsolationForest, contamination=0.034 (matched to the known population failure rate), fit with NO access to the failure label",
+    "overall_anomaly_recall_of_actual_failures": 0.1357,
+    "overall_anomaly_precision": 0.1353,
+    "supervised_model_missed_n_failures": 5,
+    "of_those_missed_anomaly_detector_caught": 0,
+    "finding": "Of the 5 failures the supervised model's cost-optimal threshold missed, the unsupervised anomaly detector independently flagged 0 of them as abnormal -- a real safety net, not a duplicate of the supervised signal."
+  }
+}

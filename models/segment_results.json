@@ -1,0 +1,81 @@
+{
+  "framing": "L/M/H are AI4I 2020 product-quality variants, used here as a stand-in for distinct deployment segments -- NOT real customer sites. This is a segment-level generalization analysis, not a multi-customer field study.",
+  "global_threshold_used_as_baseline": 0.21,
+  "total_cost_if_one_global_threshold_everywhere_usd": 1218000,
+  "total_cost_if_recalibrated_per_reliable_segment_usd": 1202000,
+  "total_savings_from_segment_recalibration_usd": 16000,
+  "segments": {
+    "H": {
+      "n_machines_in_test_set": 252,
+      "actual_failure_rate": 0.0198,
+      "n_actual_failures": 5,
+      "reliable_for_recalibration": false,
+      "reliability_note": "only 5 actual failures in this segment's test slice; per-segment threshold not recalibrated (kept at the global threshold) to avoid overfitting to noise",
+      "at_global_threshold": {
+        "threshold": 0.21,
+        "total_cost_usd": 66000,
+        "recall": 1.0,
+        "false_positive_rate": 0.0526,
+        "tn": 234,
+        "fp": 13,
+        "fn": 0,
+        "tp": 5
+      },
+      "at_segment_recalibrated_threshold": {
+        "threshold": 0.21,
+        "total_cost_usd": 66000,
+        "recall": 1.0,
+        "false_positive_rate": 0.0526
+      },
+      "savings_from_recalibration_usd": 0
+    },
+    "L": {
+      "n_machines_in_test_set": 1475,
+      "actual_failure_rate": 0.0346,
+      "n_actual_failures": 51,
+      "reliable_for_recalibration": true,
+      "reliability_note": "51 actual failures -- enough to recalibrate with reasonable confidence",
+      "at_global_threshold": {
+        "threshold": 0.21,
+        "total_cost_usd": 742000,
+        "recall": 0.9412,
+        "false_positive_rate": 0.073,
+        "tn": 1320,
+        "fp": 104,
+        "fn": 3,
+        "tp": 48
+      },
+      "at_segment_recalibrated_threshold": {
+        "threshold": 0.22,
+        "total_cost_usd": 732000,
+        "recall": 0.9412,
+        "false_positive_rate": 0.0695
+      },
+      "savings_from_recalibration_usd": 10000
+    },
+    "M": {
+      "n_machines_in_test_set": 773,
+      "actual_failure_rate": 0.0375,
+      "n_actual_failures": 29,
+      "reliable_for_recalibration": true,
+      "reliability_note": "29 actual failures -- enough to recalibrate with reasonable confidence",
+      "at_global_threshold": {
+        "threshold": 0.21,
+        "total_cost_usd": 410000,
+        "recall": 0.931,
+        "false_positive_rate": 0.0632,
+        "tn": 697,
+        "fp": 47,
+        "fn": 2,
+        "tp": 27
+      },
+      "at_segment_recalibrated_threshold": {
+        "threshold": 0.45,
+        "total_cost_usd": 404000,
+        "recall": 0.8966,
+        "false_positive_rate": 0.0309
+      },
+      "savings_from_recalibration_usd": 6000
+    }
+  }
+}

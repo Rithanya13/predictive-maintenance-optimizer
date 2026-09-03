@@ -44,6 +44,55 @@ narrow slice of machines actually worth a technician's time — and the
 *threshold* decides how aggressively to lean toward catching failures versus
 avoiding false alarms, which is a cost decision, not an ML metric.
 
+## One global model does not perform identically everywhere
+
+A single model deployed fleet-wide is usually evaluated with a single
+global metric — which hides the fact that it can perform very differently
+on different subgroups of the population it's deployed against. Using
+AI4I's `Type` field (L/M/H — a **product-quality variant, not a real
+customer site**) as a stand-in for "different deployment segments":
+
+| Segment | Actual failures (test set) | Recall @ global threshold | FPR @ global threshold | Reliable to recalibrate? |
+|---|---|---|---|---|
+| H | 5 | 100% | 5.3% | **No — too few failures to trust a segment-specific threshold** |
+| L | 51 | 94.1% | 7.3% | Yes |
+| M | 29 | 93.1% | 6.3% → 3.1% at a recalibrated threshold of 0.45 | Yes |
+
+Recalibrating the threshold per segment (only where there's enough data to
+do it responsibly) saves an additional **$16,000** on top of the global
+threshold's savings — a real but modest number, and reported as such rather
+than inflated. The more important finding is qualitative: segment M's
+optimal threshold (0.45) is more than double the global one (0.21), and
+segment H simply doesn't have enough observed failures (5) in this dataset
+to recalibrate against without overfitting to noise — which is itself the
+finding a responsible analysis surfaces rather than hides. See
+`src/segment_analysis.py` and `GET /segments`.
+
+## Supervised isn't the whole story
+
+Two unsupervised analyses, run with zero access to the failure label during
+fitting:
+
+- **Clustering the failures** (`src/unsupervised_analysis.py`, KMeans on raw
+  sensor readings only) recovers a mechanically coherent sub-group: a
+  37-machine cluster that is **84% pure "power failure" (PWF)**, characterized
+  by unusually high rotational speed (2535 rpm vs. a ~1500 rpm population
+  average) paired with unusually low torque (12.4 Nm) — physically sensible,
+  since power failure in this dataset is driven by power (torque × speed)
+  falling outside a valid band. Overall failure-mode recovery is weak
+  (Adjusted Rand Index 0.04 against all five documented failure modes) —
+  reported honestly rather than oversold, because most failure mechanisms
+  don't separate cleanly on five raw sensor features alone.
+- **Anomaly detection** (IsolationForest, contamination matched to the
+  population failure rate) is tested as a safety net: of the failures the
+  supervised model's cost-optimal threshold *missed*, did the unsupervised
+  detector catch any of them anyway? On this test run the supervised
+  threshold missed only 5 failures — too small a sample to draw a strong
+  conclusion from, and the anomaly detector caught 0 of them, an honestly
+  reported null result rather than a claimed win.
+
+See `GET /unsupervised` for the full output.
+
 ## How it works
 
 ```
@@ -80,8 +129,17 @@ sensor readings ──► [1] failure model ──► [2] cost-optimal threshold
    before"). An optional LLM pass (Claude, if `ANTHROPIC_API_KEY` is set)
    smooths the prose, strictly grounded in the same computed facts — no new
    claims. The project runs fully with zero API keys.
-4. **`app/main.py`** — a FastAPI service wrapping all three:
-   `POST /predict`, `GET /schedule`, `GET /explain/{product_id}`.
+4. **`src/segment_analysis.py`** — same held-out test set, sliced by
+   segment, to check whether the one global threshold is actually
+   well-calibrated for every subgroup, and flags segments too small to
+   recalibrate responsibly instead of pretending otherwise.
+5. **`src/unsupervised_analysis.py`** — clusters the actual failures
+   (validated post-hoc against documented failure modes, never trained on
+   them) and runs an anomaly detector as an independent check on the
+   supervised model's blind spots.
+6. **`app/main.py`** — a FastAPI service wrapping all of the above:
+   `POST /predict`, `GET /schedule`, `GET /explain/{product_id}`,
+   `GET /segments`, `GET /unsupervised`.
 
 ## Why the numbers are honest, not cherry-picked
 
@@ -105,10 +163,12 @@ sensor readings ──► [1] failure model ──► [2] cost-optimal threshold
 
 ```bash
 pip install -r requirements.txt
-python3 src/train_model.py          # trains model, writes models/results.json
-python3 src/schedule_optimizer.py   # builds this week's schedule
-python3 src/explain.py              # demo explanations for the 3 riskiest machines
-uvicorn app.main:app --reload       # API at http://localhost:8000/docs
+python3 src/train_model.py            # trains model, writes models/results.json
+python3 src/schedule_optimizer.py     # builds this week's schedule
+python3 src/explain.py                # demo explanations for the 3 riskiest machines
+python3 src/segment_analysis.py       # per-segment generalization check
+python3 src/unsupervised_analysis.py  # clustering + anomaly detection
+uvicorn app.main:app --reload         # API at http://localhost:8000/docs
 ```
 
 Or with Docker:
@@ -118,8 +178,8 @@ docker build -t predictive-maintenance-optimizer .
 docker run -p 8000:8000 predictive-maintenance-optimizer
 ```
 
-Tests (9 passing, covering the model, the optimizer's capacity constraint,
-and the API):
+Tests (13 passing, covering the model, the optimizer's capacity constraint,
+the segment analysis, the unsupervised analysis, and the API):
 
 ```bash
 pytest tests/ -v
@@ -133,9 +193,12 @@ are reproducible on a clean checkout, not just on one machine.
 
 This is the actual shape of enterprise predictive-maintenance products
 (fleet-wide monitoring, cost-sensitive alerting, prescriptive scheduling,
-plain-language explanations for non-technical operators) — not a Kaggle
-leaderboard exercise. The open questions a real deployment would add next:
-per-site threshold recalibration (the same model deployed across different
-customer sites will drift differently), model monitoring for data drift,
-and replacing the static hours-per-type assumption with a real work-order
-integration.
+plain-language explanations for non-technical operators, and awareness that
+one global model doesn't behave identically everywhere it's deployed) — not
+a Kaggle leaderboard exercise. Deliberately **not** built: distributed
+training/serving infrastructure (Spark/Ray) for a 10,000-row dataset would
+be manufactured complexity, not a real need — the Docker/FastAPI/CI path is
+the credible production story at this scale. The open items a real
+deployment would still add: model monitoring for data drift over time, and
+replacing the static hours-per-machine-type assumption with real work-order
+data.

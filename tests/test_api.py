@@ -37,3 +37,19 @@ def test_schedule():
 def test_explain_unknown_machine_404():
     r = client.get("/explain/NOT_A_REAL_ID")
     assert r.status_code == 404
+
+
+def test_segments_endpoint():
+    r = client.get("/segments")
+    assert r.status_code == 200
+    body = r.json()
+    assert set(body["segments"].keys()) == {"H", "L", "M"}
+    assert "not real customer" in body["framing"].lower()
+
+
+def test_unsupervised_endpoint():
+    r = client.get("/unsupervised")
+    assert r.status_code == 200
+    body = r.json()
+    assert "clustering" in body and "anomaly_detection" in body
+    assert 0.0 <= body["anomaly_detection"]["overall_anomaly_recall_of_actual_failures"] <= 1.0

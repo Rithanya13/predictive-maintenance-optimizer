@@ -1,8 +1,10 @@
 """
-FastAPI service exposing the three pieces as one product:
-  POST /predict   -> failure risk for a machine's current sensor readings
-  GET  /schedule  -> this week's optimized maintenance schedule
+FastAPI service exposing the pieces as one product:
+  POST /predict     -> failure risk for a machine's current sensor readings
+  GET  /schedule    -> this week's optimized maintenance schedule
   GET  /explain/{product_id} -> plain-English reason a machine was flagged
+  GET  /segments    -> per-segment (product-type) generalization analysis
+  GET  /unsupervised -> clustering + anomaly-detection findings
   GET  /health
 """
 import sys
@@ -15,8 +17,11 @@ from pydantic import BaseModel, Field
 
 from src.explain import explain_machine
 from src.schedule_optimizer import load_scored_fleet, solve_schedule, WEEKLY_CAPACITY_HOURS
+import json
 import joblib
 from pathlib import Path as _Path
+
+RESULTS_DIR = _Path(__file__).resolve().parent.parent / "models"
 
 MODEL_PATH = _Path(__file__).resolve().parent.parent / "models" / "failure_model.joblib"
 
@@ -103,3 +108,30 @@ def explain(product_id: str, use_llm: bool = False):
         return explain_machine(product_id, use_llm=use_llm)
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
+
+
+@app.get("/segments")
+def segments(recompute: bool = False):
+    """Per-segment (product-type) generalization analysis: does the single
+    global threshold under- or over-perform on any segment, and is there
+    enough data in that segment to trust a recalibrated one? See
+    src/segment_analysis.py for the full caveats — L/M/H are product-quality
+    variants used as a stand-in for deployment segments, not real customers."""
+    path = RESULTS_DIR / "segment_results.json"
+    if recompute or not path.exists():
+        from src.segment_analysis import main as run_segment_analysis
+        run_segment_analysis()
+    return json.loads(path.read_text())
+
+
+@app.get("/unsupervised")
+def unsupervised(recompute: bool = False):
+    """Clustering of actual failures (validated post-hoc against the known
+    failure-mode flags) plus an IsolationForest anomaly detector checked
+    as a safety net against failures the supervised model's threshold
+    missed. See src/unsupervised_analysis.py for method and caveats."""
+    path = RESULTS_DIR / "unsupervised_results.json"
+    if recompute or not path.exists():
+        from src.unsupervised_analysis import main as run_unsupervised_analysis
+        run_unsupervised_analysis()
+    return json.loads(path.read_text())
