@@ -1,0 +1,15 @@
+pandas>=2.0,<4.0
+scikit-learn>=1.5,<2.0
+xgboost>=2.0,<4.0
+shap>=0.45,<1.0
+pulp>=2.7,<4.0
+fastapi>=0.110,<1.0
+uvicorn[standard]>=0.30,<1.0
+joblib>=1.4,<2.0
+pytest>=8.0,<10.0
+httpx>=0.27,<1.0
+numpy>=1.26,<3.0
+
+# Optional: only needed if you set ANTHROPIC_API_KEY and pass use_llm=true
+# to /explain — the app runs fully without it (template explanations).
+# anthropic>=0.30

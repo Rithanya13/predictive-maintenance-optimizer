@@ -1,0 +1,830 @@
+{
+  "dataset": "AI4I 2020 Predictive Maintenance Dataset (UCI #601), n=10000, failure rate=3.39%",
+  "test_set_size": 2500,
+  "actual_failures_in_test_set": 85,
+  "model": "XGBoost, scale_pos_weight for imbalance, features exclude failure-mode leak columns",
+  "roc_auc": 0.9718,
+  "pr_auc": 0.786,
+  "cost_assumptions_usd": {
+    "false_negative_missed_failure": 50000,
+    "false_positive_unnecessary_inspection": 2000,
+    "true_positive_caught_failure_planned_repair": 8000,
+    "true_negative_left_alone": 0
+  },
+  "baseline_run_to_failure_usd": 4250000,
+  "baseline_inspect_everyone_usd": 5510000,
+  "model_at_default_threshold_0.5": {
+    "total_cost_usd": 1362000,
+    "tn": 2347,
+    "fp": 68,
+    "fn": 13,
+    "tp": 72,
+    "savings_vs_run_to_failure_usd": 2888000,
+    "savings_vs_inspect_everyone_usd": 4148000
+  },
+  "model_at_cost_optimal_threshold": {
+    "threshold": 0.21,
+    "total_cost": 1218000,
+    "tn": 2251,
+    "fp": 164,
+    "fn": 5,
+    "tp": 80,
+    "savings_vs_run_to_failure_usd": 3032000,
+    "savings_vs_inspect_everyone_usd": 4292000,
+    "savings_vs_default_threshold_usd": 144000
+  },
+  "threshold_sweep": [
+    {
+      "threshold": 0.01,
+      "total_cost": 2188000,
+      "tn": 1703,
+      "fp": 712,
+      "fn": 2,
+      "tp": 83
+    },
+    {
+      "threshold": 0.02,
+      "total_cost": 1718000,
+      "tn": 1959,
+      "fp": 456,
+      "fn": 3,
+      "tp": 82
+    },
+    {
+      "threshold": 0.03,
+      "total_cost": 1586000,
+      "tn": 2046,
+      "fp": 369,
+      "fn": 4,
+      "tp": 81
+    },
+    {
+      "threshold": 0.04,
+      "total_cost": 1520000,
+      "tn": 2079,
+      "fp": 336,
+      "fn": 4,
+      "tp": 81
+    },
+    {
+      "threshold": 0.05,
+      "total_cost": 1480000,
+      "tn": 2099,
+      "fp": 316,
+      "fn": 4,
+      "tp": 81
+    },
+    {
+      "threshold": 0.06,
+      "total_cost": 1490000,
+      "tn": 2115,
+      "fp": 300,
+      "fn": 5,
+      "tp": 80
+    },
+    {
+      "threshold": 0.07,
+      "total_cost": 1452000,
+      "tn": 2134,
+      "fp": 281,
+      "fn": 5,
+      "tp": 80
+    },
+    {
+      "threshold": 0.08,
+      "total_cost": 1424000,
+      "tn": 2148,
+      "fp": 267,
+      "fn": 5,
+      "tp": 80
+    },
+    {
+      "threshold": 0.09,
+      "total_cost": 1398000,
+      "tn": 2161,
+      "fp": 254,
+      "fn": 5,
+      "tp": 80
+    },
+    {
+      "threshold": 0.1,
+      "total_cost": 1386000,
+      "tn": 2167,
+      "fp": 248,
+      "fn": 5,
+      "tp": 80
+    },
+    {
+      "threshold": 0.11,
+      "total_cost": 1364000,
+      "tn": 2178,
+      "fp": 237,
+      "fn": 5,
+      "tp": 80
+    },
+    {
+      "threshold": 0.12,
+      "total_cost": 1338000,
+      "tn": 2191,
+      "fp": 224,
+      "fn": 5,
+      "tp": 80
+    },
+    {
+      "threshold": 0.13,
+      "total_cost": 1316000,
+      "tn": 2202,
+      "fp": 213,
+      "fn": 5,
+      "tp": 80
+    },
+    {
+      "threshold": 0.14,
+      "total_cost": 1308000,
+      "tn": 2206,
+      "fp": 209,
+      "fn": 5,
+      "tp": 80
+    },
+    {
+      "threshold": 0.15,
+      "total_cost": 1294000,
+      "tn": 2213,
+      "fp": 202,
+      "fn": 5,
+      "tp": 80
+    },
+    {
+      "threshold": 0.16,
+      "total_cost": 1272000,
+      "tn": 2224,
+      "fp": 191,
+      "fn": 5,
+      "tp": 80
+    },
+    {
+      "threshold": 0.17,
+      "total_cost": 1258000,
+      "tn": 2231,
+      "fp": 184,
+      "fn": 5,
+      "tp": 80
+    },
+    {
+      "threshold": 0.18,
+      "total_cost": 1250000,
+      "tn": 2235,
+      "fp": 180,
+      "fn": 5,
+      "tp": 80
+    },
+    {
+      "threshold": 0.19,
+      "total_cost": 1240000,
+      "tn": 2240,
+      "fp": 175,
+      "fn": 5,
+      "tp": 80
+    },
+    {
+      "threshold": 0.2,
+      "total_cost": 1230000,
+      "tn": 2245,
+      "fp": 170,
+      "fn": 5,
+      "tp": 80
+    },
+    {
+      "threshold": 0.21,
+      "total_cost": 1218000,
+      "tn": 2251,
+      "fp": 164,
+      "fn": 5,
+      "tp": 80
+    },
+    {
+      "threshold": 0.22,
+      "total_cost": 1248000,
+      "tn": 2257,
+      "fp": 158,
+      "fn": 6,
+      "tp": 79
+    },
+    {
+      "threshold": 0.23,
+      "total_cost": 1324000,
+      "tn": 2261,
+      "fp": 154,
+      "fn": 8,
+      "tp": 77
+    },
+    {
+      "threshold": 0.24,
+      "total_cost": 1318000,
+      "tn": 2264,
+      "fp": 151,
+      "fn": 8,
+      "tp": 77
+    },
+    {
+      "threshold": 0.25,
+      "total_cost": 1308000,
+      "tn": 2269,
+      "fp": 146,
+      "fn": 8,
+      "tp": 77
+    },
+    {
+      "threshold": 0.26,
+      "total_cost": 1344000,
+      "tn": 2272,
+      "fp": 143,
+      "fn": 9,
+      "tp": 76
+    },
+    {
+      "threshold": 0.27,
+      "total_cost": 1378000,
+      "tn": 2276,
+      "fp": 139,
+      "fn": 10,
+      "tp": 75
+    },
+    {
+      "threshold": 0.28,
+      "total_cost": 1374000,
+      "tn": 2278,
+      "fp": 137,
+      "fn": 10,
+      "tp": 75
+    },
+    {
+      "threshold": 0.29,
+      "total_cost": 1366000,
+      "tn": 2282,
+      "fp": 133,
+      "fn": 10,
+      "tp": 75
+    },
+    {
+      "threshold": 0.3,
+      "total_cost": 1356000,
+      "tn": 2287,
+      "fp": 128,
+      "fn": 10,
+      "tp": 75
+    },
+    {
+      "threshold": 0.31,
+      "total_cost": 1350000,
+      "tn": 2290,
+      "fp": 125,
+      "fn": 10,
+      "tp": 75
+    },
+    {
+      "threshold": 0.32,
+      "total_cost": 1344000,
+      "tn": 2293,
+      "fp": 122,
+      "fn": 10,
+      "tp": 75
+    },
+    {
+      "threshold": 0.33,
+      "total_cost": 1336000,
+      "tn": 2297,
+      "fp": 118,
+      "fn": 10,
+      "tp": 75
+    },
+    {
+      "threshold": 0.34,
+      "total_cost": 1326000,
+      "tn": 2302,
+      "fp": 113,
+      "fn": 10,
+      "tp": 75
+    },
+    {
+      "threshold": 0.35,
+      "total_cost": 1318000,
+      "tn": 2306,
+      "fp": 109,
+      "fn": 10,
+      "tp": 75
+    },
+    {
+      "threshold": 0.36,
+      "total_cost": 1308000,
+      "tn": 2311,
+      "fp": 104,
+      "fn": 10,
+      "tp": 75
+    },
+    {
+      "threshold": 0.37,
+      "total_cost": 1298000,
+      "tn": 2316,
+      "fp": 99,
+      "fn": 10,
+      "tp": 75
+    },
+    {
+      "threshold": 0.38,
+      "total_cost": 1296000,
+      "tn": 2317,
+      "fp": 98,
+      "fn": 10,
+      "tp": 75
+    },
+    {
+      "threshold": 0.39,
+      "total_cost": 1288000,
+      "tn": 2321,
+      "fp": 94,
+      "fn": 10,
+      "tp": 75
+    },
+    {
+      "threshold": 0.4,
+      "total_cost": 1282000,
+      "tn": 2324,
+      "fp": 91,
+      "fn": 10,
+      "tp": 75
+    },
+    {
+      "threshold": 0.41,
+      "total_cost": 1274000,
+      "tn": 2328,
+      "fp": 87,
+      "fn": 10,
+      "tp": 75
+    },
+    {
+      "threshold": 0.42,
+      "total_cost": 1264000,
+      "tn": 2333,
+      "fp": 82,
+      "fn": 10,
+      "tp": 75
+    },
+    {
+      "threshold": 0.43,
+      "total_cost": 1262000,
+      "tn": 2334,
+      "fp": 81,
+      "fn": 10,
+      "tp": 75
+    },
+    {
+      "threshold": 0.44,
+      "total_cost": 1256000,
+      "tn": 2337,
+      "fp": 78,
+      "fn": 10,
+      "tp": 75
+    },
+    {
+      "threshold": 0.45,
+      "total_cost": 1252000,
+      "tn": 2339,
+      "fp": 76,
+      "fn": 10,
+      "tp": 75
+    },
+    {
+      "threshold": 0.46,
+      "total_cost": 1250000,
+      "tn": 2340,
+      "fp": 75,
+      "fn": 10,
+      "tp": 75
+    },
+    {
+      "threshold": 0.47,
+      "total_cost": 1284000,
+      "tn": 2344,
+      "fp": 71,
+      "fn": 11,
+      "tp": 74
+    },
+    {
+      "threshold": 0.48,
+      "total_cost": 1322000,
+      "tn": 2346,
+      "fp": 69,
+      "fn": 12,
+      "tp": 73
+    },
+    {
+      "threshold": 0.49,
+      "total_cost": 1320000,
+      "tn": 2347,
+      "fp": 68,
+      "fn": 12,
+      "tp": 73
+    },
+    {
+      "threshold": 0.5,
+      "total_cost": 1362000,
+      "tn": 2347,
+      "fp": 68,
+      "fn": 13,
+      "tp": 72
+    },
+    {
+      "threshold": 0.51,
+      "total_cost": 1362000,
+      "tn": 2347,
+      "fp": 68,
+      "fn": 13,
+      "tp": 72
+    },
+    {
+      "threshold": 0.52,
+      "total_cost": 1442000,
+      "tn": 2349,
+      "fp": 66,
+      "fn": 15,
+      "tp": 70
+    },
+    {
+      "threshold": 0.53,
+      "total_cost": 1442000,
+      "tn": 2349,
+      "fp": 66,
+      "fn": 15,
+      "tp": 70
+    },
+    {
+      "threshold": 0.54,
+      "total_cost": 1478000,
+      "tn": 2352,
+      "fp": 63,
+      "fn": 16,
+      "tp": 69
+    },
+    {
+      "threshold": 0.55,
+      "total_cost": 1472000,
+      "tn": 2355,
+      "fp": 60,
+      "fn": 16,
+      "tp": 69
+    },
+    {
+      "threshold": 0.56,
+      "total_cost": 1508000,
+      "tn": 2358,
+      "fp": 57,
+      "fn": 17,
+      "tp": 68
+    },
+    {
+      "threshold": 0.57,
+      "total_cost": 1506000,
+      "tn": 2359,
+      "fp": 56,
+      "fn": 17,
+      "tp": 68
+    },
+    {
+      "threshold": 0.58,
+      "total_cost": 1498000,
+      "tn": 2363,
+      "fp": 52,
+      "fn": 17,
+      "tp": 68
+    },
+    {
+      "threshold": 0.59,
+      "total_cost": 1494000,
+      "tn": 2365,
+      "fp": 50,
+      "fn": 17,
+      "tp": 68
+    },
+    {
+      "threshold": 0.6,
+      "total_cost": 1490000,
+      "tn": 2367,
+      "fp": 48,
+      "fn": 17,
+      "tp": 68
+    },
+    {
+      "threshold": 0.61,
+      "total_cost": 1486000,
+      "tn": 2369,
+      "fp": 46,
+      "fn": 17,
+      "tp": 68
+    },
+    {
+      "threshold": 0.62,
+      "total_cost": 1528000,
+      "tn": 2369,
+      "fp": 46,
+      "fn": 18,
+      "tp": 67
+    },
+    {
+      "threshold": 0.63,
+      "total_cost": 1526000,
+      "tn": 2370,
+      "fp": 45,
+      "fn": 18,
+      "tp": 67
+    },
+    {
+      "threshold": 0.64,
+      "total_cost": 1524000,
+      "tn": 2371,
+      "fp": 44,
+      "fn": 18,
+      "tp": 67
+    },
+    {
+      "threshold": 0.65,
+      "total_cost": 1522000,
+      "tn": 2372,
+      "fp": 43,
+      "fn": 18,
+      "tp": 67
+    },
+    {
+      "threshold": 0.66,
+      "total_cost": 1516000,
+      "tn": 2375,
+      "fp": 40,
+      "fn": 18,
+      "tp": 67
+    },
+    {
+      "threshold": 0.67,
+      "total_cost": 1514000,
+      "tn": 2376,
+      "fp": 39,
+      "fn": 18,
+      "tp": 67
+    },
+    {
+      "threshold": 0.68,
+      "total_cost": 1554000,
+      "tn": 2377,
+      "fp": 38,
+      "fn": 19,
+      "tp": 66
+    },
+    {
+      "threshold": 0.69,
+      "total_cost": 1554000,
+      "tn": 2377,
+      "fp": 38,
+      "fn": 19,
+      "tp": 66
+    },
+    {
+      "threshold": 0.7,
+      "total_cost": 1548000,
+      "tn": 2380,
+      "fp": 35,
+      "fn": 19,
+      "tp": 66
+    },
+    {
+      "threshold": 0.71,
+      "total_cost": 1548000,
+      "tn": 2380,
+      "fp": 35,
+      "fn": 19,
+      "tp": 66
+    },
+    {
+      "threshold": 0.72,
+      "total_cost": 1548000,
+      "tn": 2380,
+      "fp": 35,
+      "fn": 19,
+      "tp": 66
+    },
+    {
+      "threshold": 0.73,
+      "total_cost": 1540000,
+      "tn": 2384,
+      "fp": 31,
+      "fn": 19,
+      "tp": 66
+    },
+    {
+      "threshold": 0.74,
+      "total_cost": 1534000,
+      "tn": 2387,
+      "fp": 28,
+      "fn": 19,
+      "tp": 66
+    },
+    {
+      "threshold": 0.75,
+      "total_cost": 1534000,
+      "tn": 2387,
+      "fp": 28,
+      "fn": 19,
+      "tp": 66
+    },
+    {
+      "threshold": 0.76,
+      "total_cost": 1574000,
+      "tn": 2388,
+      "fp": 27,
+      "fn": 20,
+      "tp": 65
+    },
+    {
+      "threshold": 0.77,
+      "total_cost": 1608000,
+      "tn": 2392,
+      "fp": 23,
+      "fn": 21,
+      "tp": 64
+    },
+    {
+      "threshold": 0.78,
+      "total_cost": 1606000,
+      "tn": 2393,
+      "fp": 22,
+      "fn": 21,
+      "tp": 64
+    },
+    {
+      "threshold": 0.79,
+      "total_cost": 1606000,
+      "tn": 2393,
+      "fp": 22,
+      "fn": 21,
+      "tp": 64
+    },
+    {
+      "threshold": 0.8,
+      "total_cost": 1600000,
+      "tn": 2396,
+      "fp": 19,
+      "fn": 21,
+      "tp": 64
+    },
+    {
+      "threshold": 0.81,
+      "total_cost": 1642000,
+      "tn": 2396,
+      "fp": 19,
+      "fn": 22,
+      "tp": 63
+    },
+    {
+      "threshold": 0.82,
+      "total_cost": 1682000,
+      "tn": 2397,
+      "fp": 18,
+      "fn": 23,
+      "tp": 62
+    },
+    {
+      "threshold": 0.83,
+      "total_cost": 1680000,
+      "tn": 2398,
+      "fp": 17,
+      "fn": 23,
+      "tp": 62
+    },
+    {
+      "threshold": 0.84,
+      "total_cost": 1678000,
+      "tn": 2399,
+      "fp": 16,
+      "fn": 23,
+      "tp": 62
+    },
+    {
+      "threshold": 0.85,
+      "total_cost": 1716000,
+      "tn": 2401,
+      "fp": 14,
+      "fn": 24,
+      "tp": 61
+    },
+    {
+      "threshold": 0.86,
+      "total_cost": 1758000,
+      "tn": 2401,
+      "fp": 14,
+      "fn": 25,
+      "tp": 60
+    },
+    {
+      "threshold": 0.87,
+      "total_cost": 1842000,
+      "tn": 2401,
+      "fp": 14,
+      "fn": 27,
+      "tp": 58
+    },
+    {
+      "threshold": 0.88,
+      "total_cost": 1842000,
+      "tn": 2401,
+      "fp": 14,
+      "fn": 27,
+      "tp": 58
+    },
+    {
+      "threshold": 0.89,
+      "total_cost": 1924000,
+      "tn": 2402,
+      "fp": 13,
+      "fn": 29,
+      "tp": 56
+    },
+    {
+      "threshold": 0.9,
+      "total_cost": 1966000,
+      "tn": 2402,
+      "fp": 13,
+      "fn": 30,
+      "tp": 55
+    },
+    {
+      "threshold": 0.91,
+      "total_cost": 2050000,
+      "tn": 2402,
+      "fp": 13,
+      "fn": 32,
+      "tp": 53
+    },
+    {
+      "threshold": 0.92,
+      "total_cost": 2044000,
+      "tn": 2405,
+      "fp": 10,
+      "fn": 32,
+      "tp": 53
+    },
+    {
+      "threshold": 0.93,
+      "total_cost": 2084000,
+      "tn": 2406,
+      "fp": 9,
+      "fn": 33,
+      "tp": 52
+    },
+    {
+      "threshold": 0.94,
+      "total_cost": 2124000,
+      "tn": 2407,
+      "fp": 8,
+      "fn": 34,
+      "tp": 51
+    },
+    {
+      "threshold": 0.95,
+      "total_cost": 2246000,
+      "tn": 2409,
+      "fp": 6,
+      "fn": 37,
+      "tp": 48
+    },
+    {
+      "threshold": 0.96,
+      "total_cost": 2664000,
+      "tn": 2410,
+      "fp": 5,
+      "fn": 47,
+      "tp": 38
+    },
+    {
+      "threshold": 0.97,
+      "total_cost": 2996000,
+      "tn": 2412,
+      "fp": 3,
+      "fn": 55,
+      "tp": 30
+    },
+    {
+      "threshold": 0.98,
+      "total_cost": 3330000,
+      "tn": 2413,
+      "fp": 2,
+      "fn": 63,
+      "tp": 22
+    },
+    {
+      "threshold": 0.99,
+      "total_cost": 3662000,
+      "tn": 2415,
+      "fp": 0,
+      "fn": 71,
+      "tp": 14
+    }
+  ]
+}

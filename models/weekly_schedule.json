@@ -1,0 +1,83 @@
+{
+  "weekly_capacity_hours": 200,
+  "machines_worth_considering": 1589,
+  "machines_scheduled_by_optimizer": 133,
+  "hours_used_by_optimizer": 200.0,
+  "expected_dollar_value_optimizer": 5510795.2,
+  "machines_scheduled_by_naive_risk_ranking": 121,
+  "hours_used_by_naive_ranking": 199.5,
+  "expected_dollar_value_naive_ranking": 5035430.91,
+  "extra_value_captured_by_optimizer_usd": 475364.29,
+  "top_10_scheduled_machines": [
+    {
+      "Product ID": "L51909",
+      "Type": "L",
+      "p_fail": 0.9997000098228455,
+      "hours": 1.5,
+      "expected_net_benefit": 41986.3625
+    },
+    {
+      "Product ID": "L54773",
+      "Type": "L",
+      "p_fail": 0.9997000098228455,
+      "hours": 1.5,
+      "expected_net_benefit": 41986.3467
+    },
+    {
+      "Product ID": "L51642",
+      "Type": "L",
+      "p_fail": 0.9994000196456909,
+      "hours": 1.5,
+      "expected_net_benefit": 41974.225
+    },
+    {
+      "Product ID": "L51563",
+      "Type": "L",
+      "p_fail": 0.9994000196456909,
+      "hours": 1.5,
+      "expected_net_benefit": 41971.4582
+    },
+    {
+      "Product ID": "L51597",
+      "Type": "L",
+      "p_fail": 0.9991000294685364,
+      "hours": 1.5,
+      "expected_net_benefit": 41959.8584
+    },
+    {
+      "Product ID": "L51823",
+      "Type": "L",
+      "p_fail": 0.9990000128746033,
+      "hours": 1.5,
+      "expected_net_benefit": 41956.1369
+    },
+    {
+      "Product ID": "L48676",
+      "Type": "L",
+      "p_fail": 0.9987999796867371,
+      "hours": 1.5,
+      "expected_net_benefit": 41947.1126
+    },
+    {
+      "Product ID": "L51251",
+      "Type": "L",
+      "p_fail": 0.9983999729156494,
+      "hours": 1.5,
+      "expected_net_benefit": 41927.7813
+    },
+    {
+      "Product ID": "L54263",
+      "Type": "L",
+      "p_fail": 0.9983000159263611,
+      "hours": 1.5,
+      "expected_net_benefit": 41927.2594
+    },
+    {
+      "Product ID": "L53677",
+      "Type": "L",
+      "p_fail": 0.9983000159263611,
+      "hours": 1.5,
+      "expected_net_benefit": 41925.3135
+    }
+  ]
+}
